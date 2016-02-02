@@ -1,0 +1,120 @@
+/*COLORS: (tyle default: #9ba2d2;) (list-button default: #40435a;)*/
+
+body {
+	background: snow;
+	margin: 0;
+	padding: 0;
+	font-family: 'Dosis', sans-serif;
+	letter-spacing: 2px;
+}
+
+#overlay {
+	background: #AB6A8C;
+	opacity: .8;
+	box-shadow: 0 0 25px #4B3745;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	'z-index': 5000;
+	padding-top: 14em;
+	transition-property: top 100%;
+	transition-duration: 4s;
+	transition-timing-function: easeInQuart;
+}
+
+h2 {
+	padding-left: 5%;
+	letter-spacing: 5px;
+	color: #4B3745;
+}
+
+button {
+	background: #B37897;
+	border: 2px solid #4B3745;
+	height: 2.8em; width: 16em;
+	margin: 1em;
+	/*padding-left: 4.5%;*/
+	font-family: 'Dosis', sans-serif;
+	letter-spacing: 2px;
+	color: #4B3745;
+	
+}
+
+input {
+	background: #B37897;
+	border: 2px solid #4B3745;
+	height: 2.8em; width: 16em;
+	margin: 1em;
+	/*padding-left: 4.5%;*/
+	color: #4B3745;
+	font-family: 'Dosis', sans-serif;
+	letter-spacing: 2px;
+	text-align: center;
+}
+
+#container {
+	display: flex;
+	justify-content: center;
+	padding-top: 9%;
+
+}
+
+.active {
+	transition-property: 100%;
+	transition-duration: 4s;
+	transition-timing-function: easeInOutQuint;
+}
+
+ul {
+	padding: .75em;
+		display: inline-block;
+}
+
+li {
+	background: #9ba2d2;
+	margin: 40%;
+	border-radius: 50px;
+	height: 45px; width: 45px;
+	list-style: none;
+	transition-property: 100%;
+	transition-duration: 1s;
+	transition-timing-function: easeInOutBack;
+}
+
+/*theClick buttons*/
+li:first-child {	
+	background: #40435a;
+}
+
+/*=====HOVERS && TRANSITIONS========*/
+
+.active {
+	/*code that lights up div and gives it a text shadow when their button is pressed;*/
+	box-shadow: 0 0 25px white;
+	background: white;
+}
+
+li:first-child:hover {	
+	background: grey;
+	box-shadow: 0 0 25px grey;
+}
+
+button:hover {	
+	background: #B37897;
+	box-shadow: 0 0 25px #4B3745;
+}
+
+input:hover {
+	box-shadow: 0 0 25px #4B3745;
+}
+/*====================*/
+
+.p1 {
+	background: #7D5469;
+}
+
+.p2 {
+	background: #eedc71;
+}
