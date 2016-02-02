@@ -10,7 +10,6 @@ var holderP2 = [];
 
 $(function(){
 
-var overlay = $(function() {
 	//creating overlay
   var docHeight = $(document).height();
   $("body").append("<div id='overlay'></div>");
@@ -28,13 +27,15 @@ var overlay = $(function() {
 		$('<h2>What are your names?</h2>').appendTo('#overlay');
 		$('<input id="player1" placeholder="Player One"></input>').appendTo('#overlay');
 		$('<input id="player2" placeholder="Player Two"></input>').appendTo('#overlay');
-		$player1 = $('#player1').val();
-		$player2 = $('#player2').val();
 		
 		$('<button id="enter">enter</button>').appendTo('#overlay');
 
 		//enter button click scenario: removes button and overplay.
 		$('#enter').click(function(){
+			$player1 = $('#player1').val();
+			console.log($player1);
+			$player2 = $('#player2').val();
+			console.log($player2);
 			$('button').fadeOut('slow');
 			// $('#overlay').toggleClass('.active', false);
 			$('input').fadeOut('slow');
@@ -71,8 +72,6 @@ var overlay = $(function() {
 		})
 	})	
 
- });
- //<--overlay
 
 //========Game Board Setup================
 
@@ -175,6 +174,7 @@ function dataConditionsP1() {
 winArrayVirt = [];
 winArrayHorz = [];
 winArrayDiag = [];
+winArrayDiagSame = [];
 //calculates for Virtical
 	for(var i=0;i<holderP1.length;i++) {
     // get the data attribute as a string
@@ -182,13 +182,14 @@ winArrayDiag = [];
     console.log(numData);
     //this searches for horizontal
     for (var j = 1; j < holderP1.length; j++) {
-    	if (numData - 1 == holderP1[j].data().attribute) {
-    		// winArrayVirt.push(holderP1);
+    	if ((numData - 1) == holderP1[j].data().attribute) {
     		winArrayVirt.push(holderP1[i]);
     		console.log(winArrayVirt);
     		//calculates virtical win by length of holder array.
     		if (winArrayVirt.length == 3) {
     			console.log("it's a virtical win");
+    			$winner = $player1;
+    			endGameWindow();
     		};
     	}
     };
@@ -201,35 +202,53 @@ winArrayDiag = [];
     //this searches for horizontal
     for (var j = 1; j < holderP1.length; j++) {
     	if (numData + 1 == holderP1[j].data().attribute) {
-    		// winArrayHorz.push(holderP1);
     		winArrayHorz.push(holderP1[i]);
     		console.log(winArrayHorz);
     		//calculates horizontal win by length of holder array.
     		if (winArrayHorz.length == 3) {
     			console.log("P1: it's a horizontal win");
+    			$winner = $player1;
+    			endGameWindow();
     		};
     	}
     };
 	}
 
 	//calculates for Diagonally
+	// for(var i=0;i<holderP1.length;i++) {
+ //    // get the data attribute as a string
+ //    numData = holderP1[i].data().attribute;
+ //    console.log(numData);
+ //    //this searches for horizontal
+ //    for (var j = 1; j < holderP1.length; j++) {
+ //    	if (numData + 2 == holderP1[j].data().attribute) {
+ //    		winArrayDiag.push(holderP1[i]);
+ //    		console.log(winArrayDiag);
+ //    		//calculates diagonally win by length of holder array.
+ //    		if (winArrayDiag.length == 3) {
+ //    			console.log("P1: it's a diagonally win");
+ //    		};
+ //    	}
+ //    };
+	// }
+
+	// calculates for diagonally descending
 	for(var i=0;i<holderP1.length;i++) {
     // get the data attribute as a string
     numData = holderP1[i].data().attribute;
     console.log(numData);
     //this searches for horizontal
     for (var j = 1; j < holderP1.length; j++) {
-    	if (numData + 2 == holderP1[j].data().attribute) {
-    		// winArrayHorz.push(holderP1);
-    		winArrayDiag.push(holderP1[i]);
-    		console.log(winArrayDiag);
-    		//calculates diagonally win by length of holder array.
-    		if (winArrayDiag.length == 3) {
-    			console.log("P1: it's a diagonally win");
+    	if (numData == holderP1[j].data().attribute) {
+    		winArrayDiagSame.push(holderP1[i]);
+    		console.log(winArrayDiagSame);
+    		//calculates horizontal win by length of holder array.
+    		if (winArrayDiagSame.length == 4) {
+    			console.log("P1: it's a diagonally descending win");
     		};
     	}
     };
-	}
+	}	
 
 } //<--dataConditionP1 function
 
@@ -244,12 +263,13 @@ function dataConditionsP2() {
     //this searches for horizontal
     for (var j = 1; j < holderP2.length; j++) {
     	if (numData2 - 1 == holderP2[j].data().attribute) {
-    		winArrayVirt2.push(holderP2);
     		winArrayVirt2.push(holderP2[i]);
     		// console.log(winArrayVirt2);
     		//calculates virtical win by length of holder array.
     		if (winArrayVirt.length == 3) {
     			console.log("P2: it's a virtical win");
+    			$winner = $player2;
+    			endGameWindow();
     		};
     	}
     };
@@ -262,12 +282,12 @@ function dataConditionsP2() {
     //this searches for horizontal
     for (var j = 1; j < holderP2.length; j++) {
     	if (numData2 + 1 == holderP2[j].data().attribute) {
-    		winArrayHorz2.push(holderP2);
     		winArrayHorz2.push(holderP2[i]);
     		// console.log(winArrayHorz2);
     		//calculates horizontal win by length of holder array.
     		if (winArrayHorz2.length == 3) {
     			console.log("P2: it's a horizontal win");
+    			$winner = $player2;
     		};
     	}
     };
@@ -300,12 +320,25 @@ function endGameWindow() {
 		$('h2').remove("#win");
 	}, 4000);
 	setTimeout(function(){
-		$('<h2>would you like to play again?</h2>').appendTo('#overlay');
-		$('<button>yes</button>').appendTo('#overlay');
-		$('<button>no</button>').appendTo('#overlay');
+		$('<h2 id="again">would you like to play again?</h2>').appendTo('#overlay');
+		$('<button id="yes">yes</button>').appendTo('#overlay');
+		$('<button id="no">no</button>').appendTo('#overlay');
 	}, 4200);
-
-
+	//yes 
+		$('#yes').click(function(){
+			// $('#again').fadeOut('slow');
+			// $('button').fadeOut('slow');
+			// setTimeout(function(){
+				$('#again').remove();
+				$('button').remove();
+				$('#overlay').remove();
+					// location.reload(true);
+			// }, 2000);
+		})
+		//no button leave page as is and says, thank you for playing.
+		$('#no').click(function(){
+			$('#again').text('Thank you for playing!');
+		})
 }
 
 
@@ -324,6 +357,26 @@ function endGameWindow() {
 
 
 //====================OLD CODE===========================
+
+	// // calculates for diagonally descending
+	// for(var i=0;i<holderP1.length;i++) {
+ //    // get the data attribute as a string
+ //    numData = holderP1[i].data().attribute;
+ //    console.log(numData);
+ //    //this searches for horizontal
+ //    for (var j = 1; j < holderP1.length; j++) {
+ //    	if (numData == holderP1[j].data().attribute) {
+ //    		winArrayDiagSame.push(holderP1[i]);
+ //    		console.log(winArrayDiagSame);
+ //    		//calculates horizontal win by length of holder array.
+ //    		if (winArrayDiagSame.length == 4) {
+ //    			console.log("P1: it's a diagonally descending win");
+ //    		};
+ //    	}
+ //    };
+	// }
+
+
 //===========Somewhat functioning conditions for win=======d===
 
 // //judging from actual grid, not from holderP1 or holder P2
