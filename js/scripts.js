@@ -33,14 +33,11 @@ $(function(){
 		//enter button click scenario: removes button and overplay.
 		$('#enter').click(function(){
 			$player1 = $('#player1').val();
-			console.log($player1);
 			$player2 = $('#player2').val();
-			console.log($player2);
 			$('button').fadeOut('slow');
 			// $('#overlay').toggleClass('.active', false);
 			$('input').fadeOut('slow');
 			$('h2').fadeOut('slow');
-		//I would like to set this to a setTimeOut and make the exit elegant.
 			setTimeout(function(){
 				$('#overlay').remove();
 			}, 1150);
@@ -67,8 +64,6 @@ $(function(){
 			setTimeout(function(){
 				$('#overlay').remove();
 			}, 1000);
-
-		//I would like to set this to a setTimeOut and make the exit elegant.
 		})
 	})	
 
@@ -179,11 +174,11 @@ winArrayDiagSame = [];
 	for(var i=0;i<holderP1.length;i++) {
     // get the data attribute as a string
     numData = holderP1[i].data().attribute;
-    console.log(numData);
+    // console.log(numData);
     //this searches for horizontal
     for (var j = 1; j < holderP1.length; j++) {
     	if ((numData - 1) == holderP1[j].data().attribute) {
-    		winArrayVirt.push(holderP1[i]);
+    		winArrayVirt.push(numData);
     		console.log(winArrayVirt);
     		//calculates virtical win by length of holder array.
     		if (winArrayVirt.length == 3) {
@@ -201,11 +196,11 @@ winArrayDiagSame = [];
     console.log(numData);
     //this searches for horizontal
     for (var j = 1; j < holderP1.length; j++) {
-    	if (numData + 1 == holderP1[j].data().attribute) {
-    		winArrayHorz.push(holderP1[i]);
+    	if ((numData + 1) == holderP1[j].data().attribute) {
+    		winArrayHorz.push(numData);
     		console.log(winArrayHorz);
     		//calculates horizontal win by length of holder array.
-    		if (winArrayHorz.length == 3) {
+    		if (winArrayHorz.length == 4) {
     			console.log("P1: it's a horizontal win");
     			$winner = $player1;
     			endGameWindow();
@@ -214,41 +209,45 @@ winArrayDiagSame = [];
     };
 	}
 
-	//calculates for Diagonally
+	// calculates for Diagonal descending
+	for(var i=0;i<holderP1.length;i++) {
+    // get the data attribute as a string
+    numData = holderP1[i].data().attribute;
+    //this searches for horizontal
+    for (var j = 1; j < holderP1.length; j++) {
+    	if ((numData + 2) == holderP1[j].data().attribute) {
+    		winArrayDiag.push(numData);
+    		console.log(winArrayDiag);
+    		//calculates diagonally win by length of holder array.
+    		if (winArrayDiag.length == 3) {
+    			console.log("P1: it's a diagonal descending win");
+    		};
+    	}
+    };
+	}
+
+	// // calculates for diagonally ascending
 	// for(var i=0;i<holderP1.length;i++) {
  //    // get the data attribute as a string
  //    numData = holderP1[i].data().attribute;
  //    console.log(numData);
+ //    if(numData == 5) {
+ //    	var array5 = [];
+ //    	array5.push()
+ //    };
+
  //    //this searches for horizontal
  //    for (var j = 1; j < holderP1.length; j++) {
- //    	if (numData + 2 == holderP1[j].data().attribute) {
- //    		winArrayDiag.push(holderP1[i]);
- //    		console.log(winArrayDiag);
- //    		//calculates diagonally win by length of holder array.
- //    		if (winArrayDiag.length == 3) {
- //    			console.log("P1: it's a diagonally win");
+ //    	if (numData == holderP1[j].data().attribute) {
+ //    		winArrayDiagSame.push(holderP1[i]);
+ //    		console.log(winArrayDiagSame);
+ //    		//calculates horizontal win by length of holder array.
+ //    		if (winArrayDiagSame.length == 4) {
+ //    			console.log("P1: it's a diagonally ascending win");
  //    		};
  //    	}
  //    };
-	// }
-
-	// calculates for diagonally descending
-	for(var i=0;i<holderP1.length;i++) {
-    // get the data attribute as a string
-    numData = holderP1[i].data().attribute;
-    console.log(numData);
-    //this searches for horizontal
-    for (var j = 1; j < holderP1.length; j++) {
-    	if (numData == holderP1[j].data().attribute) {
-    		winArrayDiagSame.push(holderP1[i]);
-    		console.log(winArrayDiagSame);
-    		//calculates horizontal win by length of holder array.
-    		if (winArrayDiagSame.length == 4) {
-    			console.log("P1: it's a diagonally descending win");
-    		};
-    	}
-    };
-	}	
+	// }	
 
 } //<--dataConditionP1 function
 
@@ -318,27 +317,32 @@ function endGameWindow() {
   $('<h2 id="win">' + $winner + ' has won.</h2>').appendTo('#overlay');
 	setTimeout(function(){
 		$('h2').remove("#win");
-	}, 4000);
+	}, 3500);
 	setTimeout(function(){
 		$('<h2 id="again">would you like to play again?</h2>').appendTo('#overlay');
 		$('<button id="yes">yes</button>').appendTo('#overlay');
 		$('<button id="no">no</button>').appendTo('#overlay');
-	}, 4200);
-	//yes 
 		$('#yes').click(function(){
-			// $('#again').fadeOut('slow');
-			// $('button').fadeOut('slow');
-			// setTimeout(function(){
-				$('#again').remove();
-				$('button').remove();
+			$('button').fadeOut('slow');
+			$('#again').fadeOut('slow');
+			setTimeout(function(){
+				location.reload();
 				$('#overlay').remove();
-					// location.reload(true);
-			// }, 2000);
-		})
-		//no button leave page as is and says, thank you for playing.
+				}, 1500);
+			})
+				//no button leave page as is and says, thank you for playing.
 		$('#no').click(function(){
-			$('#again').text('Thank you for playing!');
+			$('button').fadeOut('slow');
+			$('#again').fadeOut('slow');
+			setTimeout(function(){
+			 $('<h2 id="thanks">Thanks for playing!</h2>').appendTo('#overlay');
+			}, 1500);
+			
 		})
+	}, 4000);
+	//yes button reloads page.
+
+
 }
 
 
