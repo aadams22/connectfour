@@ -218,7 +218,7 @@ array9 = [];
     		winArrayHorz.push(numData);
     		console.log(winArrayHorz);
     		//calculates horizontal win by length of holder array.
-    		if (winArrayHorz.length == 4) {
+    		if (winArrayHorz.length == 3) {
     			console.log("P1: it's a horizontal win");
     			$winner = $player1;
     			endGameWindow();
