@@ -159,17 +159,14 @@ function theSearch(e) {
 			holderP1.sort();
 			console.log(holderP1);
 			liArray.splice(i, 1);
-			// console.log(liArray);
-				dataConditionsP1();
+			dataConditionsP1();
 			
 		}else if($currentLI.hasClass('p2')) {
 			holderP2.push($currentLI);
 			holderP2.sort();
 			console.log(holderP2);
 			liArray.splice(i, 1);
-			// console.log(liArray);
-				// dataConditions();
-
+				// dataConditionsP2();
 		}		
 	}
 } //<--theSearch
@@ -177,6 +174,7 @@ function theSearch(e) {
 function dataConditionsP1() {
 winArrayVirt = [];
 winArrayHorz = [];
+winArrayDiag = [];
 //calculates for Virtical
 	for(var i=0;i<holderP1.length;i++) {
     // get the data attribute as a string
@@ -208,14 +206,73 @@ winArrayHorz = [];
     		console.log(winArrayHorz);
     		//calculates horizontal win by length of holder array.
     		if (winArrayHorz.length == 3) {
-    			console.log("it's a horizontal win");
+    			console.log("P1: it's a horizontal win");
     		};
     	}
     };
 	}
 
+	//calculates for Diagonally
+	for(var i=0;i<holderP1.length;i++) {
+    // get the data attribute as a string
+    numData = holderP1[i].data().attribute;
+    console.log(numData);
+    //this searches for horizontal
+    for (var j = 1; j < holderP1.length; j++) {
+    	if (numData + 2 == holderP1[j].data().attribute) {
+    		// winArrayHorz.push(holderP1);
+    		winArrayDiag.push(holderP1[i]);
+    		console.log(winArrayDiag);
+    		//calculates diagonally win by length of holder array.
+    		if (winArrayDiag.length == 3) {
+    			console.log("P1: it's a diagonally win");
+    		};
+    	}
+    };
+	}
 
 } //<--dataConditionP1 function
+
+function dataConditionsP2() {
+	winArrayVirt2 = [];
+	winArrayHorz2 = [];
+	winArrayDiag2 = [];
+	for(var i=0;i<holderP2.length;i++) {
+    // get the data attribute as a string
+    numData2 = holderP2[i].data().attribute;
+    // console.log(numData2);
+    //this searches for horizontal
+    for (var j = 1; j < holderP2.length; j++) {
+    	if (numData2 - 1 == holderP2[j].data().attribute) {
+    		winArrayVirt2.push(holderP2);
+    		winArrayVirt2.push(holderP2[i]);
+    		// console.log(winArrayVirt2);
+    		//calculates virtical win by length of holder array.
+    		if (winArrayVirt.length == 3) {
+    			console.log("P2: it's a virtical win");
+    		};
+    	}
+    };
+	}
+	//calculates for Horizontal
+	for(var i=0;i<holderP2.length;i++) {
+    // get the data attribute as a string
+    numData2 = holderP2[i].data().attribute;
+    // console.log(numData2);
+    //this searches for horizontal
+    for (var j = 1; j < holderP2.length; j++) {
+    	if (numData2 + 1 == holderP2[j].data().attribute) {
+    		winArrayHorz2.push(holderP2);
+    		winArrayHorz2.push(holderP2[i]);
+    		// console.log(winArrayHorz2);
+    		//calculates horizontal win by length of holder array.
+    		if (winArrayHorz2.length == 3) {
+    			console.log("P2: it's a horizontal win");
+    		};
+    	}
+    };
+	}
+} //<--dataConditionsP2
 
 
 
