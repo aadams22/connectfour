@@ -84,22 +84,22 @@ function liAssignment(li) {
 }
 liAssignment($('li').not(document.getElementsByClassName('theClick')));
 
-var arrayY = [1, 2, 3, 4, 5, 6, 7];
-var arrayX = [1, 2, 3, 4, 5, 6];
+// var arrayY = [1, 2, 3, 4, 5, 6, 7];
+// var arrayX = [1, 2, 3, 4, 5, 6];
 
-//creates grandMatrixArray by combining array1 and array2
-for (var i = 0; i < arrayY.length; i++) {
-	for (var j = 0; j < arrayX.length; j++) {
-		var $theAddition = arrayY[i] + arrayX[j];
-		grandMatrixArray.push($theAddition);
-	};
-};
+// //creates grandMatrixArray by combining array1 and array2
+// for (var i = 0; i < arrayY.length; i++) {
+// 	for (var j = 0; j < arrayX.length; j++) {
+// 		var $theAddition = arrayY[i] + arrayX[j];
+// 		grandMatrixArray.push($theAddition);
+// 	};
+// };
 
-//assigns grandMatrixArray integers to the <li> elements from liArray with the same index number
-for (var i = 0; i < liArray.length; i++) {
-	liArray[i].className = grandMatrixArray[i];
-};
-console.log(liArray);
+// //assigns grandMatrixArray integers to the <li> elements from liArray with the same index number
+// for (var i = 0; i < liArray.length; i++) {
+// 	liArray[i].className = grandMatrixArray[i];
+// };
+// console.log(liArray);
 
 //======END SETUP=============================
 
@@ -134,7 +134,7 @@ console.log(liArray);
 				element.addClass('p1');
 				$('.p1').removeClass('a');
 				$clickValue = false;
-				theConditionsP1();
+				theSearch();
 			// }, 1710);
 			 	
 		}else if ($clickValue == false) {
@@ -142,7 +142,7 @@ console.log(liArray);
 				element.addClass('p2');
 				$('.p2').removeClass('a');
 				$clickValue = true;
-				theConditionsP2();
+				theSearch();
 			// }, 1710);
 			
 		}
@@ -150,91 +150,74 @@ console.log(liArray);
  	}; //<--playerTurn
 
 
-// function theSearch(e) {
+function theSearch(e) {
 	
-// 	for (var i = 0; i < liArray.length; i++) {
-// 		var $currentLI = $(liArray[i]);
-// 		if($currentLI.hasClass('p1')) {
-// 			holderP1.push($currentLI);
-// 			holderP1.sort();
-// 			console.log(holderP1);
-// 			liArray.splice(i, 1);
-// 			// console.log(liArray);
-// 				theConditions();
+	for (var i = 0; i < liArray.length; i++) {
+		var $currentLI = $(liArray[i]);
+		if($currentLI.hasClass('p1')) {
+			holderP1.push($currentLI);
+			holderP1.sort();
+			console.log(holderP1);
+			liArray.splice(i, 1);
+			// console.log(liArray);
+				dataConditionsP1();
 			
-// 		}else if($currentLI.hasClass('p2')) {
-// 			holderP2.push($currentLI);
-// 			holderP2.sort();
-// 			console.log(holderP2);
-// 			liArray.splice(i, 1);
-// 			// console.log(liArray);
-// 				theConditions();
+		}else if($currentLI.hasClass('p2')) {
+			holderP2.push($currentLI);
+			holderP2.sort();
+			console.log(holderP2);
+			liArray.splice(i, 1);
+			// console.log(liArray);
+				// dataConditions();
 
-// 		}		
-// 	}
-// } //<--theSearch
+		}		
+	}
+} //<--theSearch
 
-//judging from actual grid, not from holderP1 or holder P2
-function theConditionsP2() {
-	console.log('theConditions have been accessed P2');
-	
-console.log(liArray);
-// var $winner = $player2;
-//the rising horizontal has a bug. the bug is that it allows for skips
-//----CALCULATE P2 WIN-----
-// for (var i = 0; i < liArray.length; i++) {
-// };
-	if($('li.6.p2').length == 4) {
-		$winner = $player2
-		endGameWindow();
-	}else if($('li.7.p2').length == 4) {
-		$winner = $player2
-		endGameWindow();
-	}else if($('li.8.p2').length == 4) {
-		$winner = $player2
-		endGameWindow();
-	}else if($('li.9.p2').length == 4) {
-		$winner = $player2
-		endGameWindow();
+function dataConditionsP1() {
+winArrayVirt = [];
+winArrayHorz = [];
+//calculates for Virtical
+	for(var i=0;i<holderP1.length;i++) {
+    // get the data attribute as a string
+    numData = holderP1[i].data().attribute;
+    console.log(numData);
+    //this searches for horizontal
+    for (var j = 1; j < holderP1.length; j++) {
+    	if (numData - 1 == holderP1[j].data().attribute) {
+    		// winArrayVirt.push(holderP1);
+    		winArrayVirt.push(holderP1[i]);
+    		console.log(winArrayVirt);
+    		//calculates virtical win by length of holder array.
+    		if (winArrayVirt.length == 3) {
+    			console.log("it's a virtical win");
+    		};
+    	}
+    };
+	}
+	//calculates for Horizontal
+	for(var i=0;i<holderP1.length;i++) {
+    // get the data attribute as a string
+    numData = holderP1[i].data().attribute;
+    console.log(numData);
+    //this searches for horizontal
+    for (var j = 1; j < holderP1.length; j++) {
+    	if (numData + 1 == holderP1[j].data().attribute) {
+    		// winArrayHorz.push(holderP1);
+    		winArrayHorz.push(holderP1[i]);
+    		console.log(winArrayHorz);
+    		//calculates horizontal win by length of holder array.
+    		if (winArrayHorz.length == 3) {
+    			console.log("it's a horizontal win");
+    		};
+    	}
+    };
 	}
 
 
-if($('li.5.p2').length == 4) {
-	endGameWindow();
-}else if($('li.10.p2').length == 4) {
-	endGameWindow();
-}
-} //<--theConditions
+} //<--dataConditionP1 function
 
-function theConditionsP1() {
-console.log('theConditions have been accessed P1');
 
-// var $winner = $player1;
-//----CALCULATE P1 WIN-----
-// for (var i = 0; i < liArray.length; i++) {
-	if($('li.6.p1').length == 4) {
-		$winner = $player1
-		endGameWindow();
-	}else if($('li.7.p1').length == 4) {
-		$winner = $player1
-		endGameWindow();
-	}else if($('li.8.p1').length == 4) {
-		$winner = $player1
-		endGameWindow();
-	}else if($('li.9.p1').length == 4) {
-		$winner = $player1
-		endGameWindow();
-	}
-// };
-
-if($('li.5.p1').length == 4) {
-	endGameWindow($winner); //<--not passing winner
-}else if($('li.10.p1').length == 4) {
-	endGameWindow();
-}
-
-}
-	
 
 //-create a theSearch that runs each time a play is made.
 //perhpas pass the click value.
@@ -284,6 +267,87 @@ function endGameWindow() {
 
 
 //====================OLD CODE===========================
+//===========Somewhat functioning conditions for win=======d===
+
+// //judging from actual grid, not from holderP1 or holder P2
+// function theConditionsP2() {
+// 	console.log('theConditions have been accessed P2');
+	
+// console.log(liArray);
+
+// 	// for (var i = 0; i < holderP2.length; i++) {
+// 	// 	holderP2.parseInt();
+// 	// 	console.log(holderP2);
+// 	// };
+
+// //the rising horizontal has a bug. the bug is that it allows for skips
+// //----CALCULATES P2 WIN-----
+
+// //horizontal
+// 	if($('li.6.p2').length == 4) {
+// 		$winner = $player2
+// 		endGameWindow();
+// 	}else if($('li.7.p2').length == 4) {
+// 		$winner = $player2
+// 		endGameWindow();
+// 	}else if($('li.8.p2').length == 4) {
+// 		$winner = $player2
+// 		endGameWindow();
+// 	}else if($('li.9.p2').length == 4) {
+// 		$winner = $player2
+// 		endGameWindow();
+// 	}
+
+// 	if($('li.5.p2').length == 4) {
+// 		$winner = $player2
+// 		endGameWindow();
+// 	}else if($('li.10.p2').length == 4) {
+// 		$winner = $player2
+// 		endGameWindow();
+// 	}
+// 	//for virtical
+// 	$('ul').each(function(){
+// 		var $theFirstChildren  = $('first').children();
+// 		console.log('yo');
+// 		console.log($theFirstChildren);
+// 		$theFirstChildren.find('p2');
+// 	})
+
+
+// } //<--theConditionsP2
+
+// function theConditionsP1() {
+// console.log('theConditions have been accessed P1');
+
+// 	//----CALCULATES P1 WIN-----
+
+// //horizontal
+// 	if($('li.6.p1').length == 4) {
+// 		$winner = $player1
+// 		endGameWindow();
+// 	}else if($('li.7.p1').length == 4) {
+// 		$winner = $player1
+// 		endGameWindow();
+// 	}else if($('li.8.p1').length == 4) {
+// 		$winner = $player1
+// 		endGameWindow();
+// 	}else if($('li.9.p1').length == 4) {
+// 		$winner = $player1
+// 		endGameWindow();
+// 	}
+
+// 	if($('li.5.p1').length == 4) {
+// 		$winner = $player1
+// 		endGameWindow();
+// 	}else if($('li.10.p1').length == 4) {
+// 		$winner = $player1
+// 		endGameWindow();
+// 	}
+
+// } //<--theConditionsP1
+	
+
+//-------------------------------------------------------
 	//diagonally descending
 	// //descending evens
 	// if($('li.2, li.4, li.6, li.8').hasClass('p1')) {
@@ -597,7 +661,7 @@ function endGameWindow() {
 // 	parse to int 
 // 	throw those into an array
 // 3. Left with array of all matrix values for that player
-// 4. Sort array after each turn
+// X. Sort array after each turn
 
 // array = [1,5,6,6,6,6]
 
