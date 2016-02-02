@@ -240,6 +240,8 @@ array9 = [];
     		//calculates diagonally win by length of holder array.
     		if (winArrayDiag.length == 3) {
     			console.log("P1: it's a diagonal descending win");
+    			endGameWindow();
+    			$winner = $player1;
     		};
     	}
     };
@@ -250,6 +252,7 @@ array9 = [];
     // get the data attribute as a string
     numData = holderP1[i].data().attribute;
     console.log(numData);
+    //pushes numbers to holding arrays if they are found
     if(numData == 5) {
     	array5.push(numData);
     }else if(numData == 10) {
@@ -264,24 +267,30 @@ array9 = [];
     }else if(numData == 9) {
     	array9.push(numData);
     }
-
+    //calculates length of arrays to see if they could equal a win
     if(array5.length == 4) {
-    	console.log("P1: wins by 5s!")
+    	endGameWindow();
+    	$winner = $player1;
     };
  		if(array10.length == 4) {
-    	console.log("P1: wins by 5s!")
+    	endGameWindow();
+    	$winner = $player1;
     };
     if(array6.length == 4) {
-    	console.log("P1: wins by 6s!")
+    	endGameWindow();
+    	$winner = $player1;
     };
  		if(array7.length == 4) {
-    	console.log("P1: wins by 7s!")
+    	endGameWindow();
+    	$winner = $player1;
     };
     if(array8.length == 4) {
-    	console.log("P1: wins by 8s!")
+    	endGameWindow();
+    	$winner = $player1;
     };
  		if(array9.length == 4) {
-    	console.log("P1: wins by 9s!")
+    	endGameWindow();
+    	$winner = $player1;
     };
 	} //<--diagonally ascending
 	
@@ -331,6 +340,7 @@ function dataConditionsP2() {
     		//calculates horizontal win by length of holder array.
     		if (winArrayHorz2.length == 3) {
     			console.log("P2: it's a horizontal win");
+    			endGameWindow();
     			$winner = $player2;
     		};
     	}
@@ -350,6 +360,8 @@ function dataConditionsP2() {
     		//calculates diagonally win by length of holder array.
     		if (winArrayDiag2.length == 3) {
     			console.log("P1: it's a diagonal descending win");
+    			endGameWindow();
+    			$winner = $player2;
     		};
     	}
     };
@@ -376,22 +388,28 @@ function dataConditionsP2() {
     }
     //checks to see if the length of the array is equivelant to 4 for a match
     if(array5p2.length == 4) {
-    	console.log("P1: wins by 5s!")
+    	endGameWindow();
+    	$winner = $player2;
     };
  		if(array10p2.length == 4) {
-    	console.log("P1: wins by 5s!")
+    	endGameWindow();
+    	$winner = $player2;
     };
     if(array6p2.length == 4) {
-    	console.log("P1: wins by 6s!")
+    	endGameWindow();
+    	$winner = $player2;
     };
  		if(array7p2.length == 4) {
-    	console.log("P1: wins by 7s!")
+    	endGameWindow();
+    	$winner = $player2;
     };
     if(array8p2.length == 4) {
-    	console.log("P1: wins by 8s!")
+    	endGameWindow();
+    	$winner = $player2;
     };
  		if(array9p2.length == 4) {
-    	console.log("P1: wins by 9s!")
+    	endGameWindow();
+    	$winner = $player2;
     };
 	} //<--diagonally ascending
 
@@ -423,7 +441,7 @@ function endGameWindow() {
 				}, 1500);
 			})
 
-				//no button leave page as is and says, thank you for playing.
+		//no button leave page as is and says, thank you for playing.
 		$('#no').click(function(){
 			$('button').fadeOut('slow');
 			$('#again').fadeOut('slow');
@@ -433,27 +451,13 @@ function endGameWindow() {
 			
 		})
 	}, 4000);
-	//yes button reloads page.
 
 
-}
+} //<--endGameWindow
 
 
 
 }) //<---on ready function
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
