@@ -37,7 +37,7 @@ $(function(){
 			$('button').fadeOut('slow');
 			$('input').fadeOut('slow');
 			$('h2').fadeOut('slow');
-			$('#overlay').slideUp();
+			$('#overlay').slideUp('slow');
 		})
 	})
 
@@ -58,7 +58,7 @@ $(function(){
 			$('button').fadeOut('slow');
 			$('input').fadeOut('slow');
 			$('h2').fadeOut('slow');
-			$('#overlay').slideUp();
+			$('#overlay').slideUp('slow');
 
 		})
 	})	
