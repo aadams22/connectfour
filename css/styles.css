@@ -19,9 +19,9 @@ body {
 	text-align: center;
 	'z-index': 5000;
 	padding-top: 14em;
-	transition-property: top 100%;
+/*	transition-property: top 100%;
 	transition-duration: 4s;
-	transition-timing-function: easeInQuart;
+	transition-timing-function: easeInQuart;*/
 }
 
 h2 {

@@ -35,12 +35,9 @@ $(function(){
 			$player1 = $('#player1').val();
 			$player2 = $('#player2').val();
 			$('button').fadeOut('slow');
-			// $('#overlay').toggleClass('.active', false);
 			$('input').fadeOut('slow');
 			$('h2').fadeOut('slow');
-			setTimeout(function(){
-				$('#overlay').remove();
-			}, 1150);
+			$('#overlay').slideUp();
 		})
 	})
 
@@ -61,9 +58,8 @@ $(function(){
 			$('button').fadeOut('slow');
 			$('input').fadeOut('slow');
 			$('h2').fadeOut('slow');
-			setTimeout(function(){
-				$('#overlay').remove();
-			}, 1000);
+			$('#overlay').slideUp();
+
 		})
 	})	
 
