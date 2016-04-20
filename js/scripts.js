@@ -83,13 +83,12 @@ var counter = 0;
 //creates grandMatrixArray by combining array1 and array2
 for (var i = 0; i < arrayX.length; i++) {
 	for (var j = 0; j < arrayY.length; j++) {
-		var coordinates = { x: arrayX[i] , y : arrayY[j] };
+		var coordinates = { y: arrayY[i] , x : arrayX[j] };
 		grandMatrixArray.push(coordinates);
 		//assigns x,y coordinates to each li element
-		$(liArray[counter]).data('x', arrayX[i]);
-		$(liArray[counter]).data('y', arrayY[j]);
+		$(liArray[counter]).data('y', arrayY[i]);
+		$(liArray[counter]).data('x', arrayX[j]);
 		counter += 1;
-
 	};
 };
 
@@ -123,7 +122,7 @@ for (var i = 0; i < arrayX.length; i++) {
 
 	//a boolean player switch. game begins with true in global scope
 	function playerTurn(element) {
-		console.log('this was clicked element', element);
+		// console.log('this was clicked element', element);
 		if($clickValue == true) {
 			setTimeout(function(){
 				element.addClass('p1');
@@ -146,26 +145,32 @@ for (var i = 0; i < arrayX.length; i++) {
 
  	}; //<--playerTurn
 
-$.fn.filterByData = function(prop, val) {
-	console.log(prop, val);
+//filters elements by data value
+$.fn.filterByData = function(x, val1, y, val2) {
     return this.filter(
-        function() { return $(this).data(prop)==val;  }
+        function() { 
+        	return $(this).data(x)==val1 && $(this).data(y)==val2; 
+        }
     );
 }
 
+
 function theSearch(player, element) {
-	console.log(player);
+	// console.log(player);
+	// console.log(element);
 
-	var num = $(element).data().x;
-	var all = $('li').filterByData('x', num)
+	var valX = $(element).data().x;
+	var valY = $(element).data().y;
 
-	if($('li').find($(element).data().x + 1).hasClass(player)) {
-		console.log('the next one on x has class ', player);
-	}else {
-		console.log('nope', all.length);
+	var foundSibling = $('li').filterByData('x', valX, 'y', valY);
+	console.log('found element: ', foundSibling);
 
-	}
+	counter = 0;
+	for (var i = 0; i < 4; i++) {
 
+		$('li').filterByData('x', valX, 'y', valY);
+		counter +=1;
+	};
 
 
 };
