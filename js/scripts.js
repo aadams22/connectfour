@@ -129,7 +129,7 @@ for (var i = 0; i < arrayX.length; i++) {
 				$('.p1').removeClass('a');
 				//returns the click value to that of the other player
 				$clickValue = false;
-				theSearch('p1', element);
+				theXSearch('p1', element);
 			}, 1510);
 
 		}else if ($clickValue == false) {
@@ -138,7 +138,7 @@ for (var i = 0; i < arrayX.length; i++) {
 				$('.p2').removeClass('a');
 				//returns the click value to that of the other player
 				$clickValue = true;
-				theSearch('p2', element);
+				theXSearch('p2', element);
 			}, 1510);
 
 		}
@@ -155,27 +155,38 @@ $.fn.filterByData = function(x, val1, y, val2) {
 }
 
 
-function theSearch(player, element) {
+function theXSearch(player, element) {
 	// console.log(player);
 	// console.log(element);
 
 	var valX = $(element).data().x;
 	var valY = $(element).data().y;
 
-	var foundSibling = $('li').filterByData('x', valX, 'y', valY);
-	console.log('found element: ', foundSibling);
 
-	counter = 0;
 	for (var i = 0; i < 4; i++) {
+		console.log('about to run');
+		var foundSibling = $('li').filterByData('x', valX -= 1, 'y', valY);
+		if(foundSibling.hasClass(player) != true) {
+			return
+		}else { console.log('continuing') }
 
-		$('li').filterByData('x', valX, 'y', valY);
-		counter +=1;
+		console.log('runing');
+		// console.log('found element: ', foundSibling);
+
 	};
 
 
 };
 
 
+function theYSearch(valX, valY) {
+	console.log('this is Y search');
+}
+
+
+function youWon() {
+	alert('you won!');
+}
 
 
 
