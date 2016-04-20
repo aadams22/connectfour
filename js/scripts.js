@@ -85,13 +85,14 @@ for (var i = 0; i < arrayX.length; i++) {
 	for (var j = 0; j < arrayY.length; j++) {
 		var coordinates = { x: arrayX[i] , y : arrayY[j] };
 		grandMatrixArray.push(coordinates);
+		//assigns x,y coordinates to each li element
 		$(liArray[counter]).data('x', arrayX[i]);
 		$(liArray[counter]).data('y', arrayY[j]);
 		counter += 1;
+
 	};
 };
 
-console.log(liArray);
 
 //======END SETUP=============================
 	//adding class a in order to iterate through the UL.
@@ -122,14 +123,14 @@ console.log(liArray);
 
 	//a boolean player switch. game begins with true in global scope
 	function playerTurn(element) {
-
+		console.log('this was clicked element', element);
 		if($clickValue == true) {
 			setTimeout(function(){
 				element.addClass('p1');
 				$('.p1').removeClass('a');
 				//returns the click value to that of the other player
 				$clickValue = false;
-				// theSearch();
+				theSearch('p1', element);
 			}, 1510);
 
 		}else if ($clickValue == false) {
@@ -138,16 +139,36 @@ console.log(liArray);
 				$('.p2').removeClass('a');
 				//returns the click value to that of the other player
 				$clickValue = true;
-				// theSearch();
+				theSearch('p2', element);
 			}, 1510);
 
 		}
 
  	}; //<--playerTurn
 
+$.fn.filterByData = function(prop, val) {
+	console.log(prop, val);
+    return this.filter(
+        function() { return $(this).data(prop)==val;  }
+    );
+}
+
+function theSearch(player, element) {
+	console.log(player);
+
+	var num = $(element).data().x;
+	var all = $('li').filterByData('x', num)
+
+	if($('li').find($(element).data().x + 1).hasClass(player)) {
+		console.log('the next one on x has class ', player);
+	}else {
+		console.log('nope', all.length);
+
+	}
 
 
 
+};
 
 
 
