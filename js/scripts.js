@@ -23,11 +23,11 @@ $(function(){
 	$('#computer').click(function(){
 		$('h2').remove();
 		$('button').remove();
-		
+
 		$('<h2>What are your names?</h2>').appendTo('#overlay');
 		$('<input id="player1" placeholder="Player One"></input>').appendTo('#overlay');
 		$('<input id="player2" placeholder="Player Two"></input>').appendTo('#overlay');
-		
+
 		$('<button id="enter">enter</button>').appendTo('#overlay');
 
 		//enter button click scenario: removes button and overplay.
@@ -41,16 +41,16 @@ $(function(){
 		})
 	})
 
-	//two player game click scenario: removes h2, buttons, and appends h2, appends input, collects input value, 
+	//two player game click scenario: removes h2, buttons, and appends h2, appends input, collects input value,
 	$('#px2').click(function(){
-		
+
 		$('h2').remove();
 		$('button').remove();
-		
+
 		$('<h2>What is your name?</h2>').appendTo('#overlay');
 		$('<input placeholder="What is your name?"></input>').appendTo('#overlay');
 		$player0 = $('#player0').val();
-		
+
 		$('<button id="submit">enter</button>').appendTo('#overlay');
 
 		//enter button click scenario: removes button and overplay.
@@ -61,7 +61,7 @@ $(function(){
 			$('#overlay').slideUp('slow');
 
 		})
-	})	
+	})
 
 
 //========Game Board Setup================
@@ -74,31 +74,31 @@ function liAssignment(li) {
 }
 liAssignment($('li').not(document.getElementsByClassName('theClick')));
 
-//this creates and adds the matrix dynamically to each <li>. 
+//this creates and adds the matrix dynamically to each <li>.
 //It is currently hardcoded into the html. I will probably modify this in the future.
-// var arrayY = [1, 2, 3, 4, 5, 6, 7];
-// var arrayX = [1, 2, 3, 4, 5, 6];
+var arrayX = [0, 1, 2, 3, 4, 5, 6];
+var arrayY = [0, 1, 2, 3, 4, 5];
+var counter = 0;
 
-// //creates grandMatrixArray by combining array1 and array2
-// for (var i = 0; i < arrayY.length; i++) {
-// 	for (var j = 0; j < arrayX.length; j++) {
-// 		var $theAddition = arrayY[i] + arrayX[j];
-// 		grandMatrixArray.push($theAddition);
-// 	};
-// };
+//creates grandMatrixArray by combining array1 and array2
+for (var i = 0; i < arrayX.length; i++) {
+	for (var j = 0; j < arrayY.length; j++) {
+		var coordinates = { x: arrayX[i] , y : arrayY[j] };
+		grandMatrixArray.push(coordinates);
+		$(liArray[counter]).data('x', arrayX[i]);
+		$(liArray[counter]).data('y', arrayY[j]);
+		counter += 1;
+	};
+};
 
-// //assigns grandMatrixArray integers to the <li> elements from liArray with the same index number
-// for (var i = 0; i < liArray.length; i++) {
-// 	liArray[i].className = grandMatrixArray[i];
-// };
-// console.log(liArray);
+console.log(liArray);
 
 //======END SETUP=============================
 	//adding class a in order to iterate through the UL.
 	var $liAll = $('li');
 	var $data = $liAll.addClass('a');
 
-	//
+
 	$('.theClick').click(function(e){
 		// e.preventDefault();
 		var $children = $(this).parent().children();
@@ -117,7 +117,7 @@ liAssignment($('li').not(document.getElementsByClassName('theClick')));
 				return playerTurn($findChildren);
 			}
 		};
-		
+
 	}) //<--.click function
 
 	//a boolean player switch. game begins with true in global scope
@@ -129,291 +129,32 @@ liAssignment($('li').not(document.getElementsByClassName('theClick')));
 				$('.p1').removeClass('a');
 				//returns the click value to that of the other player
 				$clickValue = false;
-				theSearch();
+				// theSearch();
 			}, 1510);
-			 	
+
 		}else if ($clickValue == false) {
 			setTimeout(function(){
 				element.addClass('p2');
 				$('.p2').removeClass('a');
 				//returns the click value to that of the other player
 				$clickValue = true;
-				theSearch();
+				// theSearch();
 			}, 1510);
-			
+
 		}
 
  	}; //<--playerTurn
 
 
-function theSearch(e) {
-	
-	for (var i = 0; i < liArray.length; i++) {
-		var $currentLI = $(liArray[i]);
-		if($currentLI.hasClass('p1')) {
-			holderP1.push($currentLI);
-			//we need to sort for winConditions based on the data value ints.
-			holderP1.sort();
-			//removing element from array so that we don't get duplicates.
-			liArray.splice(i, 1);
-			//calls the win conditions according to the player.
-			dataConditionsP1();
-			
-		}else if($currentLI.hasClass('p2')) {
-			holderP2.push($currentLI);
-			//we need to sort for winConditions based on the data value ints.
-			holderP2.sort();
-			//removing element from array so that we don't get duplicates.
-			liArray.splice(i, 1);
-			//calls the win conditions according to the player.
-			dataConditionsP2();
-		}		
-	}
-} //<--theSearch
-
-function dataConditionsP1() {
-winArrayVert = [];
-winArrayHorz = [];
-winArrayDiag = [];
-winArrayDiagSame = [];
-array5 = [];
-array10 = [];
-array6 = [];
-array7 = [];
-array8 = [];
-array9 = [];
-
-//calculates for Vertical
-	for(var i=0;i<holderP1.length;i++) {
-    // get the data attribute as a string
-    numData = holderP1[i].data().attribute;
-    // console.log(numData);
-    //this searches for horizontal
-    for (var j = 1; j < holderP1.length; j++) {
-    	if ((numData - 1) == holderP1[j].data().attribute) {
-    		winArrayVert.push(numData);
-    		console.log(winArrayVert);
-    		//calculates vertical win by length of holder array.
-    		if (winArrayVert.length == 3) {
-    			console.log("it's a vertical win");
-    			$winner = $player1;
-    			endGameWindow();
-    		};
-    	}
-    };
-	}
-	// //calculates for Horizontal
-	for(var i=0;i<holderP1.length;i++) {
-    // get the data attribute as a string
-    numData = holderP1[i].data().attribute;
-    console.log(numData);
-    holderP1.reverse();
-    //this searches for horizontal
-    for (var j = 1; j < holderP1.length; j++) {
-    	if ((numData + 1) == holderP1[j].data().attribute) {
-    		winArrayHorz.push(numData);
-    		console.log(winArrayHorz);
-    		//calculates horizontal win by length of holder array.
-    		if (winArrayHorz.length == 3) {
-    			console.log("P1: it's a horizontal win");
-    			$winner = $player1;
-    			endGameWindow();
-    		};
-    	}
-    };
-	}
-
-	// calculates for Diagonal descending
-	for(var i=0;i<holderP1.length;i++) {
-    // get the data attribute as a string
-    numData = holderP1[i].data().attribute;
-    holderP1.reverse();
-    //this searches for horizontal
-    for (var j = 1; j < holderP1.length; j++) {
-    	if ((numData + 2) == holderP1[j].data().attribute) {
-    		winArrayDiag.push(numData);
-    		console.log(winArrayDiag);
-    		//calculates diagonally win by length of holder array.
-    		if (winArrayDiag.length == 3) {
-    			console.log("P1: it's a diagonal descending win");
-    			endGameWindow();
-    			$winner = $player1;
-    		};
-    	}
-    };
-	} //<--diagonal descending
-
-	// calculates for diagonally ascending
-	for(var i=0;i<holderP1.length;i++) {
-    // get the data attribute as a string
-    numData = holderP1[i].data().attribute;
-    console.log(numData);
-    //pushes numbers to holding arrays if they are found
-    if(numData == 5) {
-    	array5.push(numData);
-    }else if(numData == 10) {
-    	array10.push(numData);
-    }else if(numData == 6) {
-    	array6.push(numData);
-    }else if(numData == 7) {
-    	array7.push(numData);
-    	// console.log(array7);
-    }else if(numData == 8) {
-    	array8.push(numData);
-    }else if(numData == 9) {
-    	array9.push(numData);
-    }
-    //calculates length of arrays to see if they could equal a win
-    if(array5.length == 4) {
-    	endGameWindow();
-    	$winner = $player1;
-    };
- 		if(array10.length == 4) {
-    	endGameWindow();
-    	$winner = $player1;
-    };
-    if(array6.length == 4) {
-    	endGameWindow();
-    	$winner = $player1;
-    };
- 		if(array7.length == 4) {
-    	endGameWindow();
-    	$winner = $player1;
-    };
-    if(array8.length == 4) {
-    	endGameWindow();
-    	$winner = $player1;
-    };
- 		if(array9.length == 4) {
-    	endGameWindow();
-    	$winner = $player1;
-    };
-	} //<--diagonally ascending
-	
-
-} //<--dataConditionP1 function
 
 
-function dataConditionsP2() {
-	winArrayVert2 = [];
-	winArrayHorz2 = [];
-	winArrayDiag2 = [];
-	array5p2 = [];
-	array10p2 = [];
-	array6p2 = [];
-	array7p2 = [];
-	array8p2 = [];
-	array9p2 = [];
 
-	//calculates for Vertical
-	for(var i=0;i<holderP2.length;i++) {
-    // get the data attribute as a string
-    numData2 = holderP2[i].data().attribute;
-    // console.log(numData2);
-    //this searches for vertical
-    for (var j = 1; j < holderP2.length; j++) {
-    	if (numData2 - 1 == holderP2[j].data().attribute) {
-    		winArrayVert2.push(holderP2[i]);
-    		//calculates virtical win by length of holder array.
-    		if (winArrayVert.length == 3) {
-    			console.log("P2: it's a vertical win");
-    			$winner = $player2;
-    			endGameWindow();
-    		};
-    	}
-    };
-	}
-	//calculates for Horizontal
-	for(var i=0;i<holderP2.length;i++) {
-    // get the data attribute as a string
-    numData2 = holderP2[i].data().attribute;
-    // console.log(numData2);
-    holderP2.reverse();
-    //this searches for horizontal
-    for (var j = 1; j < holderP2.length; j++) {
-    	if (numData2 + 1 == holderP2[j].data().attribute) {
-    		winArrayHorz2.push(holderP2[i]);
-    		//calculates horizontal win by length of holder array.
-    		if (winArrayHorz2.length == 3) {
-    			console.log("P2: it's a horizontal win");
-    			endGameWindow();
-    			$winner = $player2;
-    		};
-    	}
-    };
-	}
 
-	// calculates for Diagonal descending
-	for(var i=0;i<holderP2.length;i++) {
-    // get the data attribute as a string
-    numData = holderP2[i].data().attribute;
-    holderP2.reverse();
-    //this searches for horizontal
-    for (var j = 1; j < holderP2.length; j++) {
-    	if ((numData + 2) == holderP2[j].data().attribute) {
-    		winArrayDiag2.push(numData);
-    		console.log(winArrayDiag2);
-    		//calculates diagonally win by length of holder array.
-    		if (winArrayDiag2.length == 3) {
-    			console.log("P1: it's a diagonal descending win");
-    			endGameWindow();
-    			$winner = $player2;
-    		};
-    	}
-    };
-	} //<--diagonal descending
 
-	// calculates for diagonally ascending
-	for(var i=0;i<holderP2.length;i++) {
-    // get the data attribute as a string
-    numData = holderP2[i].data().attribute;
-    // console.log(numData);
-    if(numData == 5) {
-    	array5p2.push(numData);
-    }else if(numData == 10) {
-    	array10p2.push(numData);
-    }else if(numData == 6) {
-    	array6p2.push(numData);
-    }else if(numData == 7) {
-    	array7p2.push(numData);
-    	// console.log(array7);
-    }else if(numData == 8) {
-    	array8p2.push(numData);
-    }else if(numData == 9) {
-    	array9p2.push(numData);
-    }
-    //checks to see if the length of the array is equivelant to 4 for a match
-    if(array5p2.length == 4) {
-    	endGameWindow();
-    	$winner = $player2;
-    };
- 		if(array10p2.length == 4) {
-    	endGameWindow();
-    	$winner = $player2;
-    };
-    if(array6p2.length == 4) {
-    	endGameWindow();
-    	$winner = $player2;
-    };
- 		if(array7p2.length == 4) {
-    	endGameWindow();
-    	$winner = $player2;
-    };
-    if(array8p2.length == 4) {
-    	endGameWindow();
-    	$winner = $player2;
-    };
- 		if(array9p2.length == 4) {
-    	endGameWindow();
-    	$winner = $player2;
-    };
-	} //<--diagonally ascending
 
-} //<--dataConditionsP2
 
 
 //winning end game screen
-
 function endGameWindow() {
 
 	var docHeight = $(document).height();
@@ -444,7 +185,7 @@ function endGameWindow() {
 			setTimeout(function(){
 			 $('<h2 id="thanks">Thanks for playing!</h2>').appendTo('#overlay');
 			}, 1500);
-			
+
 		})
 	}, 4000);
 
@@ -454,8 +195,3 @@ function endGameWindow() {
 
 
 }) //<---on ready function
-
-
-
-
-
