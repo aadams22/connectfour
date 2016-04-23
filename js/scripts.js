@@ -163,7 +163,7 @@ $.fn.filterByData = function(y, valY, x, valX) {
 
 //this is being used for testing purposes only
 function youWon(color) {
-	alert('you won!');
+	alert('you won: ', color);
 };
 
 
@@ -172,73 +172,79 @@ function theSearch(color, playedPiece) {
 	var count = 0;
 	var valX = $(playedPiece).data().x;
 	var valY = $(playedPiece).data().y;
-	// var columnSearch = $('li').filterByData('y', valY, 'x', valX++);
 
 
-		function theColumnSearch() {
+
+		function columnSearch() {
 				for (var i = 0; i < 4; i++) {
-
 				var columnPiece= $('li').filterByData('y', valY, 'x', valX++);
-				console.log('this is column search: ', columnPiece, columnPiece.length);
-
-				if (!columnPiece.hasClass(color)) {
-					console.log('column not correct color'); 
-					return theRowSearch()  
-				}else { 
-					console.log(columnPiece, 'has class ', color); 
-				};
-				
+				if (!columnPiece.hasClass(color)) return searchRight();			
 				count += 1;
-				console.log('count: ', count);
-
+				if (count == 4) return youWon(color);
 			};
-
 		};
-
-		theColumnSearch();
+		columnSearch();
 
 
 		function leftHorizontalSearch() {
+			count = 0;
 			for (var i = 0; i < 4; i++) {
 				var leftHorizontalPiece = $('li').filterByData('y', valY++, 'x', valX++);
-				console.log(leftHorizontalPiece);
-				if (!leftHorizontalPiece.hasClass(color)) { 
-					console.log('row does not have class'); 
-					return;
-				}else {
-					console.log(leftHorizontalPiece, 'has class ', color); 
-				}
+
+				if (!leftHorizontalPiece.hasClass(color)) return;
+
+				count += 1;
+				if (count == 4) return youWon(color);
 
 			};
 		};
 
 		function rightHorizontalSearch() {
-			console.log('rightHorizontalSearch');
+			console.log('horizontal search');
+			count = 0;
 			for (var i = 0; i < 4; i++) {
-				var rightHorizontalPiece = $('li').filterByData('y', valY -= 1, 'x', valX++);
-				
-				if (!rightHorizontalPiece.hasClass(color)) { 
-					console.log('row does not have class'); 
-					return leftHorizontalSearch(); 
-				}else {
-					console.log(rightHorizontalPiece, 'has class ', color); 
-				}
+				var rightHorizontalPiece = $('li').filterByData('y', valY--, 'x', valX++);
+
+				if (!rightHorizontalPiece.hasClass(color)) return leftHorizontalSearch();
+
+				count += 1;
+				if (count == 4) return youWon(color);
 
 			};
 		};
 
+		function searchLeft(rightCount) {
+			count = 0;
+			valY = $(playedPiece).data().y;
 
-		function theRowSearch() {
 			for (var i = 0; i < 4; i++) {
-				var rowPiece = $('li').filterByData('y', valY++);
-				// console.log('this is row search: ', rowPiece, rowPiece.length);
-
+				var rowPiece = $('li').filterByData('y', valY--, 'x', valX);
+				console.log('the left row', rowPiece);
 				if (!rowPiece.hasClass(color)) { 
-					console.log('row does not have class'); 
-					return rightHorizontalSearch(); 
-				}else {
-					console.log(rowSearch, 'has class ', color); 
-				}
+					count += 0 
+				} else { count += 1 };
+
+
+				if (count == 4) return youWon(color);
+
+			};
+			console.log('the counts: ', count + rightCount);
+			if (count + rightCount == 4) { console.log('the counts have spoken')}
+		}
+
+		function searchRight() {
+			console.log('row search');
+			count = 0;
+			valX = $(playedPiece).data().x;
+
+			for (var i = 0; i < 4; i++) {
+				var rowPiece = $('li').filterByData('y', valY++, 'x', valX);
+				console.log('the right row', rowPiece);
+				if (!rowPiece.hasClass(color)) { return searchLeft(count); } 
+
+				count += 1;
+				if (count == 4) return youWon(color);
+
 			};
 
 		};
@@ -248,7 +254,7 @@ function theSearch(color, playedPiece) {
 
 
 
-};
+}; //theSearch
 
 
 
