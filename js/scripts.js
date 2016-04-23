@@ -121,24 +121,24 @@ for (var i = 0; i < arrayX.length; i++) {
 	}) //<--.click function
 
 	//a boolean player switch. game begins with true in global scope
-	function playerTurn(element) {
-		// console.log('this was clicked element', element);
+	function playerTurn(playedPiece) {
+		// console.log('this was clicked playedPiece', playedPiece);
 		if($clickValue == true) {
 			setTimeout(function(){
-				element.addClass('p1');
+				playedPiece.addClass('p1');
 				$('.p1').removeClass('a');
 				//returns the click value to that of the other player
 				$clickValue = false;
-				theXSearch('p1', element);
+				theSearch('p1', playedPiece);
 			}, 1510);
 
 		}else if ($clickValue == false) {
 			setTimeout(function(){
-				element.addClass('p2');
+				playedPiece.addClass('p2');
 				$('.p2').removeClass('a');
 				//returns the click value to that of the other player
 				$clickValue = true;
-				theXSearch('p2', element);
+				theSearch('p2', playedPiece);
 			}, 1510);
 
 		}
@@ -146,47 +146,58 @@ for (var i = 0; i < arrayX.length; i++) {
  	}; //<--playerTurn
 
 //filters elements by data value
-$.fn.filterByData = function(x, val1, y, val2) {
+$.fn.filterByData = function(y, valY, x, valX) {
     return this.filter(
         function() { 
-        	return $(this).data(x)==val1 && $(this).data(y)==val2; 
+        	return $(this).data(y)==valY && $(this).data(x)==valX; 
         }
     );
 }
 
 
-function theXSearch(player, element) {
-	// console.log(player);
-	// console.log(element);
+//this is being used for testing purposes only
+function youWon(color) {
+	alert('you won!');
+};
 
-	var valX = $(element).data().x;
-	var valY = $(element).data().y;
+
+
+function theSearch(color, playedPiece) {
+	var count = 0;
+	var valX = $(playedPiece).data().x;
+	var valY = $(playedPiece).data().y;
+	// var columnSearch = $('li').filterByData('y', valY, 'x', valX += count);
+	// console.log('this is column search: ', columnSearch);
+	// var rowSearch = $('li').filterByData('y', valY += count, 'x', valX);
+	// console.log('this is row search: ', rowSearch);
+
+
+
 
 
 	for (var i = 0; i < 4; i++) {
-		console.log('about to run');
-		var foundSibling = $('li').filterByData('x', valX -= 1, 'y', valY);
-		if(foundSibling.hasClass(player) != true) {
-			return
-		}else { console.log('continuing') }
 
-		console.log('runing');
-		// console.log('found element: ', foundSibling);
+		var columnSearch = $('li').filterByData('y', valY, 'x', valX += count);
+		console.log('this is column search: ', columnSearch.length);
+		var rowSearch = $('li').filterByData('y', valY += count, 'x', valX);
+		console.log('this is row search: ', rowSearch.length);
 
+
+
+		count += 1;
+		console.log(count);
 	};
+
 
 
 };
 
 
-function theYSearch(valX, valY) {
-	console.log('this is Y search');
-}
 
 
-function youWon() {
-	alert('you won!');
-}
+
+
+
 
 
 
