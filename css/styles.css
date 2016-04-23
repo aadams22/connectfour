@@ -91,9 +91,8 @@ li:first-child {
 }
 
 /*=====HOVERS && TRANSITIONS========*/
-
+/*lights up div and gives it a text shadow when their button is pressed;*/
 .active {
-	/*code that lights up div and gives it a text shadow when their button is pressed;*/
 	box-shadow: 0 0 25px white;
 	background: white;
 }
@@ -113,10 +112,6 @@ input:hover {
 }
 /*====================*/
 
-.p1 {
-	background: #7D5469;
-}
-
-.p2 {
-	background: #eedc71;
-}
+/*colors of players pieces*/
+.p1 { background: #7D5469; }
+.p2 { background: #eedc71; }
