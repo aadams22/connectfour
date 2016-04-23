@@ -227,8 +227,8 @@ function theSearch(color, playedPiece) {
 				if (count == 4) return youWon(color);
 
 			};
-			console.log('the counts: ', count + rightCount);
-			if ((count + rightCount) - 1 == 4) { youWon(color) };
+			console.log('the counts: ', (count + rightCount)-1);
+			if (count + rightCount - 1 == 4) { youWon(color) };
 		}
 
 		function searchRight() {
