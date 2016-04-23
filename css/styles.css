@@ -1,4 +1,5 @@
 /*COLORS: (tyle default: #9ba2d2;) (list-button default: #40435a;)*/
+html { height: 100%; }
 
 body {
 	background: snow;
@@ -16,8 +17,9 @@ body {
 	top: 0;
 	left: 0;
 	width: 100%;
+	height: 100%;
 	text-align: center;
-	'z-index': 5000;
+	z-index: 10;
 	padding-top: 14em;
 /*	transition-property: top 100%;
 	transition-duration: 4s;

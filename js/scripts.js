@@ -11,9 +11,9 @@ var holderP2 = [];
 $(function(){
 
 	//creating overlay
-  var docHeight = $(document).height();
+  // var docHeight = $(document).height();
   $("body").append("<div id='overlay'></div>");
-  $("#overlay").height(docHeight);
+  // $("#overlay").height(docHeight);
   //creating user choice question and button
   $('<h2>Who would you like to play against?</h2>').appendTo('#overlay');
 	$('<button id="px2">computer</button>').appendTo('#overlay');
@@ -59,7 +59,6 @@ $(function(){
 			$('input').fadeOut('slow');
 			$('h2').fadeOut('slow');
 			$('#overlay').slideUp('slow');
-
 		})
 	})
 
@@ -107,6 +106,7 @@ for (var i = 0; i < arrayY.length; i++) {
 
 	$('.theClick').click(function(e){
 		// e.preventDefault();
+					// endGameWindow();
 		var $children = $(this).parent().children();
 
 		setTimeout(function(){
@@ -162,9 +162,9 @@ $.fn.filterByData = function(y, valY, x, valX) {
 
 
 //this is being used for testing purposes only
-function youWon(color) {
-	alert('you won: ', color);
-};
+// function youWon(color) {
+// 	alert('you won: ', color);
+// };
 
 
 
@@ -180,27 +180,66 @@ function theSearch(color, playedPiece) {
 				var columnPiece= $('li').filterByData('y', valY, 'x', valX++);
 				if (!columnPiece.hasClass(color)) return searchRight();			
 				count += 1;
-				if (count == 4) return youWon(color);
+				if (count == 4) return endGameWindow(color);
 			};
 		};
 		columnSearch();
+
+		function leftUpHorizontalSearch(leftDownCount) {
+			console.log('right up horizontal search');
+			count = 0;
+			valY = $(playedPiece).data().y;
+			valX = $(playedPiece).data().x;
+
+
+			for (var i = 0; i < 4; i++) {
+				var leftUpHorizontalPiece = $('li').filterByData('y', valY++, 'x', valX--);
+				
+				leftUpHorizontalPiece.hasClass(color) ? count+=1 : count+=0;
+				
+				if (count == 4) return endGameWindow(color);
+			};
+
+			if (count + leftDownCount - 1 == 4) { endGameWindow(color) }
+			//!!!THE WIN SEARCH ENDS HERE!!!//
+		}	
 
 
 		function leftHorizontalSearch() {
 			console.log('left horizontal search');
 			count = 0;
-			for (var i = 0; i < 4; i++) {
-				var leftHorizontalPiece = $('li').filterByData('y', valY--, 'x', valX--);
+			valY = $(playedPiece).data().y;
+			valX = $(playedPiece).data().x;
 
-				if (!leftHorizontalPiece.hasClass(color)) return;
+			for (var i = 0; i < 4; i++) {
+				var leftHorizontalPiece = $('li').filterByData('y', valY--, 'x', valX++);
+
+				if (!leftHorizontalPiece.hasClass(color)) return leftUpHorizontalSearch(count);
 
 				count += 1;
-				if (count == 4) return youWon(color);
+				if (count == 4) return endGameWindow(color);
 
 			};
 		};
 
+		function rightUpHorizontalSearch(rightDownCount) {
+			console.log('right up horizontal search');
+			count = 0;
+			valY = $(playedPiece).data().y;
+			valX = $(playedPiece).data().x;
 
+
+			for (var i = 0; i < 4; i++) {
+				var rightUpHorizontalPiece = $('li').filterByData('y', valY--, 'x', valX--);
+				
+				rightUpHorizontalPiece.hasClass(color) ? count+=1 : count+=0;
+				
+				if (count == 4) return endGameWindow(color);
+			};
+
+			if (count + rightDownCount - 1 == 4) { endGameWindow(color) }
+			else leftHorizontalSearch();
+		}
 
 
 		function rightHorizontalSearch() {
@@ -210,31 +249,30 @@ function theSearch(color, playedPiece) {
 
 			for (var i = 0; i < 4; i++) {
 				var rightHorizontalPiece = $('li').filterByData('y', valY++, 'x', valX++);
-				// console.log(rightHorizontalPiece);
+
 				if (!rightHorizontalPiece.hasClass(color)) return rightUpHorizontalSearch(count);
 
 				count += 1;
-				if (count == 4) return youWon(color);
+				if (count == 4) return endGameWindow(color);
 
 			};
 		};
 
 		function searchLeft(rightCount) {
+			console.log('search left');
 			count = 0;
 			valY = $(playedPiece).data().y;
 
 			for (var i = 0; i < 4; i++) {
 				var rowPiece = $('li').filterByData('y', valY--, 'x', valX);
 
-				if (!rowPiece.hasClass(color)) { 
-					count += 0 
-				} else { count += 1 };
+				rowPiece.hasClass(color) ? count+=1 : count+=0;
 
-				if (count == 4) return youWon(color);
+				if (count == 4) return endGameWindow(color);
 
 			};
 
-			if (count + rightCount - 1 == 4) { youWon(color) }
+			if (count + rightCount - 1 == 4) { endGameWindow(color) }
 			else rightHorizontalSearch();
 		}
 
@@ -248,7 +286,7 @@ function theSearch(color, playedPiece) {
 				if (!rowPiece.hasClass(color)) { return searchLeft(count); } 
 
 				count += 1;
-				if (count == 4) return youWon(color);
+				if (count == 4) return endGameWindow(color);
 
 			};
 
@@ -274,13 +312,14 @@ function theSearch(color, playedPiece) {
 //winning end game screen
 function endGameWindow() {
 
-	var docHeight = $(document).height();
-  $("body").append("<div id='overlay'></div>");
-  $("#overlay").height(docHeight);
+	// var docHeight = $(document).height();
+	console.log($(document).height());
+  $("body").slideDown("#overlay");
+  // $("#overlay").height($(document).height());
   $('<h2 id="win">' + $winner + ' has won.</h2>').appendTo('#overlay');
-	setTimeout(function(){
-		$('h2').remove("#win");
-	}, 3500);
+	// setTimeout(function(){
+	// 	$('h2').remove("#win");
+	// }, 3500);
 	setTimeout(function(){
 		$('<h2 id="again">would you like to play again?</h2>').appendTo('#overlay');
 		$('<button id="yes">yes</button>').appendTo('#overlay');
