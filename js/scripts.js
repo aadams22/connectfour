@@ -92,6 +92,12 @@ for (var i = 0; i < arrayX.length; i++) {
 	};
 };
 
+// //used to check if data is mapped correctly to ul
+// for (var i = 0; i < liArray.length; i++) {
+// 	console.log(liArray[i], $(liArray[i]).data());
+// };
+
+
 
 //======END SETUP=============================
 	//adding class a in order to iterate through the UL.
@@ -166,21 +172,33 @@ function theSearch(color, playedPiece) {
 	var count = 0;
 	var valX = $(playedPiece).data().x;
 	var valY = $(playedPiece).data().y;
+	// var columnSearch = $('li').filterByData('y', valY, 'x', valX++);
+	var isTrue = 0;
 
 
 
 	for (var i = 0; i < 4; i++) {
 
-		var columnSearch = $('li').filterByData('y', valY, 'x', valX += count);
-		console.log('this is column search: ', columnSearch.length);
-		var rowSearch = $('li').filterByData('y', valY += count, 'x', valX);
-		console.log('this is row search: ', rowSearch.length);
+		var columnSearch = $('li').filterByData('y', valY, 'x', valX++);
+		// console.log('this is column search: ', columnSearch, columnSearch.length);
+		// if (columnSearch.hasClass(color)) { console.log(columnSearch, 'has class ', color) };
+		
+		var rowSearch = $('li').filterByData('y', valY++);
+		// console.log('this is row search: ', rowSearch, rowSearch.length);
+		// if (rowSearch.hasClass(color)) { console.log(rowSearch, 'has class ', color) };
 
-		var horizontalSearch = $('li').filterByData('y', valY += 1, 'x', valX += 1);
-		console.log(horizontalSearch);
+
+		// var leftHorizontalSearch = $('li').filterByData('y', valY++, 'x', valX++);
+		// console.log(leftHorizontalSearch);
+
+		// var rightHorizontalSearch = $('li').filterByData('y', valY -= 1, 'x', valX++);
+		// console.log(rightHorizontalSearch);
+
+
 
 		count += 1;
-		console.log(count);
+		// console.log('count: ', count);
+
 	};
 
 
