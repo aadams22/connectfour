@@ -4,9 +4,7 @@ var $winner = "";
 var $player1 = "";
 var $player2 = "";
 var liArray = [];
-var grandMatrixArray = [];
-var holderP1 = [];
-var holderP2 = [];
+
 
 $(function(){
 
@@ -37,7 +35,13 @@ $(function(){
 			$('button').fadeOut('slow');
 			$('input').fadeOut('slow');
 			$('h2').fadeOut('slow');
-			$('#overlay').slideUp('slow');
+			setTimeout(function(){
+			$('<h2>' + $player1 + ' will make the first move.</h2>').appendTo('#overlay');
+			}, 1000);
+			setTimeout(function(){
+				$('h2').fadeOut('slow');			
+				$('#overlay').slideUp('slow');
+			}, 3500);
 		})
 	})
 
@@ -60,6 +64,8 @@ $(function(){
 			$('h2').fadeOut('slow');
 			$('#overlay').slideUp('slow');
 		})
+
+
 	})
 
 
@@ -83,7 +89,6 @@ var counter = 0;
 for (var i = 0; i < arrayY.length; i++) {
 	for (var j = 0; j < arrayX.length; j++) {
 		var coordinates = { y: arrayY[i] , x : arrayX[j] };
-		grandMatrixArray.push(coordinates);
 		//assigns x,y coordinates to each li element
 		$(liArray[counter]).data('y', arrayY[i]);
 		$(liArray[counter]).data('x', arrayX[j]);
@@ -128,7 +133,7 @@ for (var i = 0; i < arrayY.length; i++) {
 
 	//a boolean player switch. game begins with true in global scope
 	function playerTurn(playedPiece) {
-		// console.log('this was clicked playedPiece', playedPiece);
+		// console.log('first player this was clicked playedPiece', playedPiece);
 		if($clickValue == true) {
 			setTimeout(function(){
 				playedPiece.addClass('p1');
@@ -172,7 +177,6 @@ function theSearch(color, playedPiece) {
 	var count = 0;
 	var valX = $(playedPiece).data().x;
 	var valY = $(playedPiece).data().y;
-
 
 
 		function columnSearch() {
@@ -310,16 +314,15 @@ function theSearch(color, playedPiece) {
 
 
 //winning end game screen
-function endGameWindow() {
+function endGameWindow(color) {
+	color == 'p1' ? $winner = $player1 : $winner = $player2;
 
-	// var docHeight = $(document).height();
-	console.log($(document).height());
-  $("body").slideDown("#overlay");
-  // $("#overlay").height($(document).height());
+  $("#overlay").slideDown();
+
   $('<h2 id="win">' + $winner + ' has won.</h2>').appendTo('#overlay');
-	// setTimeout(function(){
-	// 	$('h2').remove("#win");
-	// }, 3500);
+	setTimeout(function(){
+		$('h2').remove("#win");
+	}, 3500);
 	setTimeout(function(){
 		$('<h2 id="again">would you like to play again?</h2>').appendTo('#overlay');
 		$('<button id="yes">yes</button>').appendTo('#overlay');
