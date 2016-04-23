@@ -173,33 +173,78 @@ function theSearch(color, playedPiece) {
 	var valX = $(playedPiece).data().x;
 	var valY = $(playedPiece).data().y;
 	// var columnSearch = $('li').filterByData('y', valY, 'x', valX++);
-	var isTrue = 0;
+
+
+		function theColumnSearch() {
+				for (var i = 0; i < 4; i++) {
+
+				var columnPiece= $('li').filterByData('y', valY, 'x', valX++);
+				console.log('this is column search: ', columnPiece, columnPiece.length);
+
+				if (!columnPiece.hasClass(color)) {
+					console.log('column not correct color'); 
+					return theRowSearch()  
+				}else { 
+					console.log(columnPiece, 'has class ', color); 
+				};
+				
+				count += 1;
+				console.log('count: ', count);
+
+			};
+
+		};
+
+		theColumnSearch();
+
+
+		function leftHorizontalSearch() {
+			for (var i = 0; i < 4; i++) {
+				var leftHorizontalPiece = $('li').filterByData('y', valY++, 'x', valX++);
+				console.log(leftHorizontalPiece);
+				if (!leftHorizontalPiece.hasClass(color)) { 
+					console.log('row does not have class'); 
+					return;
+				}else {
+					console.log(leftHorizontalPiece, 'has class ', color); 
+				}
+
+			};
+		};
+
+		function rightHorizontalSearch() {
+			console.log('rightHorizontalSearch');
+			for (var i = 0; i < 4; i++) {
+				var rightHorizontalPiece = $('li').filterByData('y', valY -= 1, 'x', valX++);
+				
+				if (!rightHorizontalPiece.hasClass(color)) { 
+					console.log('row does not have class'); 
+					return leftHorizontalSearch(); 
+				}else {
+					console.log(rightHorizontalPiece, 'has class ', color); 
+				}
+
+			};
+		};
+
+
+		function theRowSearch() {
+			for (var i = 0; i < 4; i++) {
+				var rowPiece = $('li').filterByData('y', valY++);
+				// console.log('this is row search: ', rowPiece, rowPiece.length);
+
+				if (!rowPiece.hasClass(color)) { 
+					console.log('row does not have class'); 
+					return rightHorizontalSearch(); 
+				}else {
+					console.log(rowSearch, 'has class ', color); 
+				}
+			};
+
+		};
 
 
 
-	for (var i = 0; i < 4; i++) {
-
-		var columnSearch = $('li').filterByData('y', valY, 'x', valX++);
-		// console.log('this is column search: ', columnSearch, columnSearch.length);
-		// if (columnSearch.hasClass(color)) { console.log(columnSearch, 'has class ', color) };
-		
-		var rowSearch = $('li').filterByData('y', valY++);
-		// console.log('this is row search: ', rowSearch, rowSearch.length);
-		// if (rowSearch.hasClass(color)) { console.log(rowSearch, 'has class ', color) };
-
-
-		// var leftHorizontalSearch = $('li').filterByData('y', valY++, 'x', valX++);
-		// console.log(leftHorizontalSearch);
-
-		// var rightHorizontalSearch = $('li').filterByData('y', valY -= 1, 'x', valX++);
-		// console.log(rightHorizontalSearch);
-
-
-
-		count += 1;
-		// console.log('count: ', count);
-
-	};
 
 
 
