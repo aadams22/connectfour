@@ -187,9 +187,10 @@ function theSearch(color, playedPiece) {
 
 
 		function leftHorizontalSearch() {
+			console.log('left horizontal search');
 			count = 0;
 			for (var i = 0; i < 4; i++) {
-				var leftHorizontalPiece = $('li').filterByData('y', valY++, 'x', valX++);
+				var leftHorizontalPiece = $('li').filterByData('y', valY--, 'x', valX--);
 
 				if (!leftHorizontalPiece.hasClass(color)) return;
 
@@ -199,13 +200,18 @@ function theSearch(color, playedPiece) {
 			};
 		};
 
-		function rightHorizontalSearch() {
-			console.log('horizontal search');
-			count = 0;
-			for (var i = 0; i < 4; i++) {
-				var rightHorizontalPiece = $('li').filterByData('y', valY--, 'x', valX++);
 
-				if (!rightHorizontalPiece.hasClass(color)) return leftHorizontalSearch();
+
+
+		function rightHorizontalSearch() {
+			console.log('right horizontal search');
+			count = 0;
+			valY = $(playedPiece).data().y;
+
+			for (var i = 0; i < 4; i++) {
+				var rightHorizontalPiece = $('li').filterByData('y', valY++, 'x', valX++);
+				// console.log(rightHorizontalPiece);
+				if (!rightHorizontalPiece.hasClass(color)) return rightUpHorizontalSearch(count);
 
 				count += 1;
 				if (count == 4) return youWon(color);
@@ -227,8 +233,9 @@ function theSearch(color, playedPiece) {
 				if (count == 4) return youWon(color);
 
 			};
-			console.log('the counts: ', (count + rightCount)-1);
-			if (count + rightCount - 1 == 4) { youWon(color) };
+
+			if (count + rightCount - 1 == 4) { youWon(color) }
+			else rightHorizontalSearch();
 		}
 
 		function searchRight() {
@@ -237,7 +244,7 @@ function theSearch(color, playedPiece) {
 
 			for (var i = 0; i < 4; i++) {
 				var rowPiece = $('li').filterByData('y', valY++, 'x', valX);
-				console.log(rowPiece);
+
 				if (!rowPiece.hasClass(color)) { return searchLeft(count); } 
 
 				count += 1;
