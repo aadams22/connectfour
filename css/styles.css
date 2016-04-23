@@ -49,7 +49,6 @@ input {
 	border: 2px solid #4B3745;
 	height: 2.8em; width: 16em;
 	margin: 1em;
-	/*padding-left: 4.5%;*/
 	color: #4B3745;
 	font-family: 'Dosis', sans-serif;
 	letter-spacing: 2px;
@@ -70,15 +69,16 @@ input {
 }
 
 ul {
-	padding: .75em;
-		display: inline-block;
+	margin-top: 35%;
+	padding: .4em;
+	display: inline-block;
 }
 
 li {
 	background: #9ba2d2;
 	margin: 40%;
 	border-radius: 50px;
-	height: 45px; width: 45px;
+	height: 30px; width: 30px;
 	list-style: none;
 	transition-property: 100%;
 	transition-duration: 1s;
@@ -115,3 +115,15 @@ input:hover {
 /*colors of players pieces*/
 .p1 { background: #7D5469; }
 .p2 { background: #eedc71; }
+
+
+@media (min-width: 480px) {
+
+	ul { 
+		padding: .75em; 
+		margin-top: 0;
+	}
+	li { height: 45px; width: 45px; }
+
+}
+
