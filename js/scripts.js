@@ -76,13 +76,13 @@ liAssignment($('li').not(document.getElementsByClassName('theClick')));
 
 //this creates and adds the matrix dynamically to each <li>.
 //It is currently hardcoded into the html. I will probably modify this in the future.
-var arrayX = [0, 1, 2, 3, 4, 5, 6];
-var arrayY = [0, 1, 2, 3, 4, 5];
+var arrayY = [0, 1, 2, 3, 4, 5, 6];
+var arrayX = [0, 1, 2, 3, 4, 5];
 var counter = 0;
 
 //creates grandMatrixArray by combining array1 and array2
-for (var i = 0; i < arrayX.length; i++) {
-	for (var j = 0; j < arrayY.length; j++) {
+for (var i = 0; i < arrayY.length; i++) {
+	for (var j = 0; j < arrayX.length; j++) {
 		var coordinates = { y: arrayY[i] , x : arrayX[j] };
 		grandMatrixArray.push(coordinates);
 		//assigns x,y coordinates to each li element
@@ -96,7 +96,7 @@ for (var i = 0; i < arrayX.length; i++) {
 // for (var i = 0; i < liArray.length; i++) {
 // 	console.log(liArray[i], $(liArray[i]).data());
 // };
-
+// console.log(liArray.length)
 
 
 //======END SETUP=============================
@@ -219,27 +219,25 @@ function theSearch(color, playedPiece) {
 
 			for (var i = 0; i < 4; i++) {
 				var rowPiece = $('li').filterByData('y', valY--, 'x', valX);
-				console.log('the left row', rowPiece);
+
 				if (!rowPiece.hasClass(color)) { 
 					count += 0 
 				} else { count += 1 };
-
 
 				if (count == 4) return youWon(color);
 
 			};
 			console.log('the counts: ', count + rightCount);
-			if (count + rightCount == 4) { console.log('the counts have spoken')}
+			if ((count + rightCount) - 1 == 4) { youWon(color) };
 		}
 
 		function searchRight() {
-			console.log('row search');
 			count = 0;
 			valX = $(playedPiece).data().x;
 
 			for (var i = 0; i < 4; i++) {
 				var rowPiece = $('li').filterByData('y', valY++, 'x', valX);
-				console.log('the right row', rowPiece);
+				console.log(rowPiece);
 				if (!rowPiece.hasClass(color)) { return searchLeft(count); } 
 
 				count += 1;
