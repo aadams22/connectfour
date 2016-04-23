@@ -166,12 +166,6 @@ function theSearch(color, playedPiece) {
 	var count = 0;
 	var valX = $(playedPiece).data().x;
 	var valY = $(playedPiece).data().y;
-	// var columnSearch = $('li').filterByData('y', valY, 'x', valX += count);
-	// console.log('this is column search: ', columnSearch);
-	// var rowSearch = $('li').filterByData('y', valY += count, 'x', valX);
-	// console.log('this is row search: ', rowSearch);
-
-
 
 
 
@@ -182,7 +176,8 @@ function theSearch(color, playedPiece) {
 		var rowSearch = $('li').filterByData('y', valY += count, 'x', valX);
 		console.log('this is row search: ', rowSearch.length);
 
-
+		var horizontalSearch = $('li').filterByData('y', valY += 1, 'x', valX += 1);
+		console.log(horizontalSearch);
 
 		count += 1;
 		console.log(count);
