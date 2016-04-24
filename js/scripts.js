@@ -4,6 +4,7 @@ var $winner = "";
 var $player1 = "";
 var $player2 = "";
 var liArray = [];
+var responses = [];
 var audio = new Audio('./audio/piece_drop.wav');
 
 $(function(){
@@ -50,24 +51,43 @@ $(function(){
 
 		$('h2').remove();
 		$('button').remove();
+		$('<h2>' + differentResponses() + '</h2>').appendTo('#overlay');
+		setTimeout(function(){
+			location.reload();
+		}, 3000);
 
-		$('<h2>What is your name?</h2>').appendTo('#overlay');
-		$('<input placeholder="What is your name?"></input>').appendTo('#overlay');
-		$player0 = $('#player0').val();
+		//!!Use when AI is functioning!!
+		// $('<h2>What is your name?</h2>').appendTo('#overlay');
+		// $('<input placeholder="What is your name?"></input>').appendTo('#overlay');
+		// $player0 = $('#player0').val();
 
-		$('<button id="submit">enter</button>').appendTo('#overlay');
+		// $('<button id="submit">enter</button>').appendTo('#overlay');
 
-		//enter button click scenario: removes button and overplay.
-		$('button').click(function(){
-			$('button').fadeOut('slow');
-			$('input').fadeOut('slow');
-			$('h2').fadeOut('slow');
-			$('#overlay').slideUp('slow');
-		})
+		// //enter button click scenario: removes button and overplay.
+		// $('button').click(function(){
+		// 	$('button').fadeOut('slow');
+		// 	$('input').fadeOut('slow');
+		// 	$('h2').fadeOut('slow');
+		// 	$('#overlay').slideUp('slow');
+		// })
 
 
 	})
 
+
+function differentResponses() {
+	var res1 = "Sorry, Al is currently at the spa. Check back later to see if Al is finished relaxing."; 
+	var res2 = "Al is a bit grumpy today. Al says to stop poking him.";
+	var res3 = "Sorry, Al is laying by the beach drinking a margarita. We're not sure where. Check back later to see if we've located him.";
+	var res4 = "Al is currently snuggling a kitty. He'll be ready to play as soon as he's finished.";
+	var res5 = "Al is learning how to become an exterminator so that he can help us hunt bugs or star in a 1980s film.";
+	var res6 = "Al has gone on a quest to be like AlphaGo. Check back later to see if he's succeeded.";
+	var res7 = "Al has been traveling to different tech conferences to find love. All will be back once love has been found.";
+	responses.push(res1, res2, res3, res4, res5, res6, res7);
+	var res = responses[Math.floor(Math.random() * responses.length)];
+	return res;
+	console.log(res);
+}; 
 
 //========Game Board Setup================
 
@@ -129,7 +149,8 @@ for (var i = 0; i < arrayY.length; i++) {
 			}
 		};
 
-	}) //<--.click function
+	}); //<--.click function
+
 
 	//a boolean player switch. game begins with true in global scope
 	function playerTurn(playedPiece) {
@@ -314,6 +335,7 @@ function endGameWindow(color) {
 		$('<h2 id="again">would you like to play again?</h2>').appendTo('#overlay');
 		$('<button id="yes">yes</button>').appendTo('#overlay');
 		$('<button id="no">no</button>').appendTo('#overlay');
+		
 		//yes click fades buttons and h2 out, refreshes the page, and removes the overlay
 		$('#yes').click(function(){
 			$('button').fadeOut('slow');
