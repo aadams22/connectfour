@@ -54,7 +54,7 @@ $(function(){
 		$('<h2>' + differentResponses() + '</h2>').appendTo('#overlay');
 		setTimeout(function(){
 			location.reload();
-		}, 3000);
+		}, 4000);
 
 		//!!Use when AI is functioning!!
 		// $('<h2>What is your name?</h2>').appendTo('#overlay');
