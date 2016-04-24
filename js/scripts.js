@@ -4,7 +4,7 @@ var $winner = "";
 var $player1 = "";
 var $player2 = "";
 var liArray = [];
-
+var audio = new Audio('./audio/piece_drop.wav');
 
 $(function(){
 
@@ -111,15 +111,15 @@ for (var i = 0; i < arrayY.length; i++) {
 
 	$('.theClick').click(function(e){
 		// e.preventDefault();
-					// endGameWindow();
+		audio.play();
 		var $children = $(this).parent().children();
 
 		setTimeout(function(){
 			$children.addClass('active');
-		}, 450);
+		}, 150);
 		setTimeout(function(){
 			$children.removeClass('active');
-		}, 1500);
+		}, 1100);
 
 		//iterates through clicked UL beginning at the last child
 		for (var i = -1; i >= -6; i += -1) {
@@ -141,7 +141,7 @@ for (var i = 0; i < arrayY.length; i++) {
 				//returns the click value to that of the other player
 				$clickValue = false;
 				theSearch('p1', playedPiece);
-			}, 1510);
+			}, 1110);
 
 		}else if ($clickValue == false) {
 			setTimeout(function(){
@@ -150,7 +150,7 @@ for (var i = 0; i < arrayY.length; i++) {
 				//returns the click value to that of the other player
 				$clickValue = true;
 				theSearch('p2', playedPiece);
-			}, 1510);
+			}, 1110);
 
 		}
 
@@ -163,16 +163,9 @@ $.fn.filterByData = function(y, valY, x, valX) {
         	return $(this).data(y)==valY && $(this).data(x)==valX; 
         }
     );
-}
+};
 
-
-//this is being used for testing purposes only
-// function youWon(color) {
-// 	alert('you won: ', color);
-// };
-
-
-
+//discovers winner through a series of searches
 function theSearch(color, playedPiece) {
 	var count = 0;
 	var valX = $(playedPiece).data().x;
@@ -195,18 +188,15 @@ function theSearch(color, playedPiece) {
 			valY = $(playedPiece).data().y;
 			valX = $(playedPiece).data().x;
 
-
 			for (var i = 0; i < 4; i++) {
-				var leftUpHorizontalPiece = $('li').filterByData('y', valY++, 'x', valX--);
-				
-				leftUpHorizontalPiece.hasClass(color) ? count+=1 : count+=0;
-				
+				var leftUpHorizontalPiece = $('li').filterByData('y', valY++, 'x', valX--);				
+				leftUpHorizontalPiece.hasClass(color) ? count+=1 : count+=0;			
 				if (count == 4) return endGameWindow(color);
 			};
 
 			if (count + leftDownCount - 1 == 4) { endGameWindow(color) }
 			//!!!THE WIN SEARCH ENDS HERE!!!//
-		}	
+		};
 
 
 		function leftHorizontalSearch() {
@@ -217,14 +207,12 @@ function theSearch(color, playedPiece) {
 
 			for (var i = 0; i < 4; i++) {
 				var leftHorizontalPiece = $('li').filterByData('y', valY--, 'x', valX++);
-
 				if (!leftHorizontalPiece.hasClass(color)) return leftUpHorizontalSearch(count);
-
 				count += 1;
 				if (count == 4) return endGameWindow(color);
-
 			};
 		};
+
 
 		function rightUpHorizontalSearch(rightDownCount) {
 			console.log('right up horizontal search');
@@ -232,12 +220,9 @@ function theSearch(color, playedPiece) {
 			valY = $(playedPiece).data().y;
 			valX = $(playedPiece).data().x;
 
-
 			for (var i = 0; i < 4; i++) {
-				var rightUpHorizontalPiece = $('li').filterByData('y', valY--, 'x', valX--);
-				
-				rightUpHorizontalPiece.hasClass(color) ? count+=1 : count+=0;
-				
+				var rightUpHorizontalPiece = $('li').filterByData('y', valY--, 'x', valX--);	
+				rightUpHorizontalPiece.hasClass(color) ? count+=1 : count+=0;				
 				if (count == 4) return endGameWindow(color);
 			};
 
@@ -253,12 +238,9 @@ function theSearch(color, playedPiece) {
 
 			for (var i = 0; i < 4; i++) {
 				var rightHorizontalPiece = $('li').filterByData('y', valY++, 'x', valX++);
-
 				if (!rightHorizontalPiece.hasClass(color)) return rightUpHorizontalSearch(count);
-
 				count += 1;
 				if (count == 4) return endGameWindow(color);
-
 			};
 		};
 
@@ -269,11 +251,8 @@ function theSearch(color, playedPiece) {
 
 			for (var i = 0; i < 4; i++) {
 				var rowPiece = $('li').filterByData('y', valY--, 'x', valX);
-
 				rowPiece.hasClass(color) ? count+=1 : count+=0;
-
 				if (count == 4) return endGameWindow(color);
-
 			};
 
 			if (count + rightCount - 1 == 4) { endGameWindow(color) }
@@ -286,22 +265,30 @@ function theSearch(color, playedPiece) {
 
 			for (var i = 0; i < 4; i++) {
 				var rowPiece = $('li').filterByData('y', valY++, 'x', valX);
-
 				if (!rowPiece.hasClass(color)) { return searchLeft(count); } 
-
 				count += 1;
 				if (count == 4) return endGameWindow(color);
-
 			};
 
 		};
 
-
-
-
-
-
 }; //theSearch
+
+
+
+
+
+function theAiChoice() {
+	console.log('I do a thing. I make a choice. I Am AlIve. I Am an AI.');
+};
+
+
+
+
+
+
+
+
 
 
 
